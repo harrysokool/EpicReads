@@ -15,7 +15,7 @@ app.get('/', (request, response) => {
     return response.status(234).send("testing");
 })
 
-// get all books
+// GET all books
 // we can have more than one get request
 app.get('/books', async (request, response) => {
   try {
@@ -39,6 +39,9 @@ app.get('/books/:id', async (request, response) => {
       return response.status(400).send({message: 'Please provide a book id'});
     }
     const book = await Book.findById(request.params.id);
+    if (!book) {
+      return response.status(404).send({message: 'Book not found'});
+    }
     return response.status(200).send(book);
   } catch (error) {
     console.log(error);
@@ -71,6 +74,57 @@ app.post('/books', async (request, response) => {
     response.status(500).send({message: error.message});
   }
 });
+
+// PUT is a http method.
+// route to update a book
+// find the book by id and update it
+app.put('/books/:id', async (request, response) => {
+  try {
+    if (!request.params.id) {
+      return response.status(400).send({message: 'Please provide a book id'});
+    }
+    const book = await Book.findById(request.params.id);
+    if (!book) {
+      return response.status(404).send({message: 'Book not found'});
+    }
+    const {id} = request.params;
+    const result = await Book.findByIdAndUpdate(id, request.body);
+    if (!result) {
+      return response.status(404).send({message: 'Book not found'});
+    } else {
+      return response.status(200).send({message: 'Book updated successfully'});
+    }
+  } catch (error) {
+    console.log(error);
+    return response.status(500).send({message: error.message});
+  }
+});
+
+// DELETE is a http method.
+// provide the id of the book to delete
+app.delete('/books/:id', async (request, response) => {
+  try {
+    if (!request.params.id) {
+      return response.status(400).send({message: 'Please provide a book id'});
+    }
+    const book = await Book.findById(request.params.id);
+    if (!book) {
+      return response.status(404).send({message: 'Book not found'});
+    }
+    const {id} = request.params;
+    const result = await Book.findOneAndDelete(id);
+    if (!result) {
+      return response.status(404).send({message: 'Book not found'});
+    } else {
+      return response.status(200).send({message: 'Book deleted'});
+    }
+  } catch (error) {
+    console.log(error);
+    return response.status(500).send({message: error.message});
+  }
+});
+
+
 
 
 // connect to the database
