@@ -15,6 +15,22 @@ app.get('/', (request, response) => {
     return response.status(234).send("testing");
 })
 
+// get all books
+// we can have more than one get request
+app.get('/books', async (request, response) => {
+  try {
+    // This is a Mongoose query that searches for documents in the "books" collection. The empty object {} as the argument to the find() method means that we want to find all documents in the collection.
+    const books = await Book.find({}); 
+    return response.status(200).json({
+      count: books.length,
+      data: books
+    });
+  } catch (error) {
+    console.log(error);
+    return response.status(500).send({message: error.message});
+  }
+});  
+
 // POST is a http method.
 // route to save a new book 
 // mongoose is a async process, so we need to use async and await
