@@ -12,6 +12,18 @@ app.use(express.json());
 // use middleware to use the bookRoutes
 app.use('/books', bookRoutes);
 
+// There will be some problem such as CORS error when we try to access the API from the frontend. To solve this, we need to add the following code to the index.js file.
+// use middleware to solve CORS policy error
+// option 1: allow all origins with default of cors(*)
+app.use(cors());
+// option 2: allow specific origins
+// app.use(cors({
+//   origin: 'http://localhost:3000',
+//   methods: ['GET, POST, PUT, DELETE'],
+//   allowedHeaders: ['Content-Type'],
+// }));
+
+
 // connect to the database
 // we want to run the express server after we connect to the database
 mongoose

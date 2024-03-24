@@ -1,3 +1,4 @@
+// Routes for the book model, which will be used to create, read, update, and delete books from the database. Incase there are other models, we can create routes for them as well. So we will not have to create all http request for different models in the index.js file. 
 import express from 'express';
 import { Book } from '../models/bookModel.js';
 
