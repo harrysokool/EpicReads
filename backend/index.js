@@ -31,6 +31,21 @@ app.get('/books', async (request, response) => {
   }
 });  
 
+// GET a single book by id
+// use the :/id to get the book, it is a parameter
+app.get('/books/:id', async (request, response) => {
+  try {
+    if (!request.params.id) {
+      return response.status(400).send({message: 'Please provide a book id'});
+    }
+    const book = await Book.findById(request.params.id);
+    return response.status(200).send(book);
+  } catch (error) {
+    console.log(error);
+    return response.status(500).send({message: error.message});
+  }
+});
+
 // POST is a http method.
 // route to save a new book 
 // mongoose is a async process, so we need to use async and await
