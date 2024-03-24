@@ -8,4 +8,4 @@ const bookSchema = new mongoose.Schema({
   timestamps : true // this will automatically create a timestamp for the book Mongoose will    automatically add createdAt and updatedAt fields to the documents based on the timestamps of document creation and last update
 });
 
-export const book = mongoose.model('Kitten', bookSchema);
+export const book = mongoose.model('book', bookSchema);
