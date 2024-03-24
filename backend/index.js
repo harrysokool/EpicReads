@@ -5,6 +5,8 @@ import mongoose from 'mongoose';
 import { Book } from './models/bookModel.js';
 
 const app = express();
+// middleware is used to parse incoming request bodies with JSON payloads. This middleware is responsible for parsing the incoming request body, which contains JSON data, and then populating the request.body property with the parsed JSON data.
+app.use(express.json());
 
 // GET is a http method.
 // create a route for the server, '/' is the root route, and we have a callback function
