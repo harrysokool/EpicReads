@@ -4,10 +4,17 @@ import { PORT, MONGODB_URL } from './config.js'
 import mongoose from 'mongoose';
 import { Book } from './models/bookModel.js';
 import bookRoutes from './routes/bookRoutes.js';
+import cors from 'cors';
+
 
 const app = express();
 // middleware is used to parse incoming request bodies with JSON payloads. This middleware is responsible for parsing the incoming request body, which contains JSON data, and then populating the request.body property with the parsed JSON data.
 app.use(express.json());
+
+app.get('/', (request, response) => {
+  console.log(request);
+  return response.status(234).send({ message: 'Server is running' });
+});  
 
 // use middleware to use the bookRoutes
 app.use('/books', bookRoutes);
