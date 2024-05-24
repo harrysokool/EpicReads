@@ -11,6 +11,18 @@ const app = express();
 // middleware is used to parse incoming request bodies with JSON payloads. This middleware is responsible for parsing the incoming request body, which contains JSON data, and then populating the request.body property with the parsed JSON data.
 app.use(express.json());
 
+// There will be some problem such as CORS error when we try to access the API from the frontend. To solve this, we need to add the following code to the index.js file.
+// use middleware to solve CORS policy error
+// option 1: allow all origins with default of cors(*)
+app.use(cors());
+
+// option 2: allow specific origins
+// app.use(cors({
+//   origin: 'https://localhost:5173',
+//   methods: ['GET, POST, PUT, DELETE'],
+//   allowedHeaders: ['Content-Type'],
+// }));
+
 app.get('/', (request, response) => {
   console.log(request);
   return response.status(234).send({ message: 'Server is running' });
@@ -18,17 +30,6 @@ app.get('/', (request, response) => {
 
 // use middleware to use the bookRoutes
 app.use('/books', bookRoutes);
-
-// There will be some problem such as CORS error when we try to access the API from the frontend. To solve this, we need to add the following code to the index.js file.
-// use middleware to solve CORS policy error
-// option 1: allow all origins with default of cors(*)
-app.use(cors());
-// option 2: allow specific origins
-// app.use(cors({
-//   origin: 'http://localhost:3000',
-//   methods: ['GET, POST, PUT, DELETE'],
-//   allowedHeaders: ['Content-Type'],
-// }));
 
 
 // connect to the database
